@@ -1,0 +1,28 @@
+# --- Python (backend/) ---
+__pycache__/
+*.pyc
+.venv/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+
+# --- Secrets ---
+.env
+!.env.example
+
+# --- Node / frontend (added in Phase 5) ---
+node_modules/
+frontend/dist/
+.vite/
+
+# --- IDE / OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+#claude
+CLAUDE.md
