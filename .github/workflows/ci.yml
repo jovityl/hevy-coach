@@ -30,6 +30,8 @@ jobs:
 
     env:
       DATABASE_URL: postgresql+asyncpg://hevy:hevy@localhost:5432/hevy
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
 
     steps:
       - name: Checkout
