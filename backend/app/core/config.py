@@ -11,6 +11,7 @@ class Settings(BaseSettings):
     app_name: str = "hevy-coach"
     environment: str = "local"
     debug: bool = True
+    database_url: str = "postgresql+asyncpg://hevy:hevy@localhost:5433/hevy"
 
 
 @lru_cache
