@@ -1,7 +1,9 @@
 import uuid
+from collections.abc import Sequence
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
 
 from app.domain.models import Workout
 from app.repositories.models import WorkoutRow, WorkoutSetRow
@@ -34,6 +36,18 @@ class WorkoutRepository:
 
     async def commit(self) -> None:
         await self._session.commit()
+
+    async def fetch_user_sets(self, user_id: uuid.UUID) -> Sequence[WorkoutSetRow]:
+        """All of a user's sets, each with its parent workout eagerly loaded
+        (for the session date). selectinload avoids an N+1 query."""
+        stmt = (
+            select(WorkoutSetRow)
+            .join(WorkoutRow, WorkoutSetRow.workout_id == WorkoutRow.id)
+            .where(WorkoutRow.user_id == user_id)
+            .options(selectinload(WorkoutSetRow.workout))
+        )
+        result = await self._session.execute(stmt)
+        return result.scalars().all()
 
     @staticmethod
     def _to_row(user_id: uuid.UUID, workout: Workout) -> WorkoutRow:
