@@ -1,0 +1,6 @@
+"title","start_time","end_time","description","exercise_title","superset_id","exercise_notes","set_index","set_type","weight_kg","reps","distance_km","duration_seconds","rpe"
+"Cardio","6 Jul 2026, 20:10","6 Jul 2026, 20:55","","Treadmill",,"",0,"normal",,,3,2700,
+"Cardio","6 Jul 2026, 20:10","6 Jul 2026, 20:55","","Lat Pulldown (Cable)",,"",0,"normal",77,8,,,
+"Upper","4 Jul 2026, 17:00","4 Jul 2026, 18:30","@ Home","Bench Press (Barbell)",,"",0,"normal",60,10,,,
+"Upper","4 Jul 2026, 17:00","4 Jul 2026, 18:30","@ Home","Bench Press (Barbell)",,"",1,"dropset",50,3,,,
+"Upper","4 Jul 2026, 17:00","4 Jul 2026, 18:30","@ Home","T Bar Row",,"kelso",0,"normal",60,10,,,
