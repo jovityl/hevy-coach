@@ -5,6 +5,9 @@ from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
+# Import ORM models so their tables register on Base.metadata before
+# autogenerate diffs it against the database. Import for side effects only.
+import app.repositories.models  # noqa: E402, F401
 from alembic import context
 from app.core.config import get_settings
 from app.core.db import Base
