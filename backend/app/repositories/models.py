@@ -1,10 +1,15 @@
 import uuid
 from datetime import datetime
 
+from pgvector.sqlalchemy import Vector
 from sqlalchemy import ForeignKey, Index, UniqueConstraint, func
+from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.db import Base
+
+# text-embedding-3-small dimensionality.
+EMBEDDING_DIM = 1536
 
 
 class WorkoutRow(Base):
@@ -63,3 +68,24 @@ class WorkoutSetRow(Base):
     superset_id: Mapped[str | None]
 
     workout: Mapped["WorkoutRow"] = relationship(back_populates="sets")
+
+
+class ScienceCorpusRow(Base):
+    """`science_corpus` — condensed, cited research findings for RAG. Global
+    (not user-scoped). `abstract_text` is the retained source for auditability
+    (§6.2); `condensation_reviewed` flags whether the finding was checked
+    against that source."""
+
+    __tablename__ = "science_corpus"
+
+    id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
+    pubmed_id: Mapped[str]
+    title: Mapped[str]
+    finding_text: Mapped[str]
+    abstract_text: Mapped[str]
+    topic_tags: Mapped[list[str]] = mapped_column(JSONB)
+    citation: Mapped[str]
+    source_url: Mapped[str]
+    embedding: Mapped[list[float]] = mapped_column(Vector(EMBEDDING_DIM))
+    condensation_reviewed: Mapped[bool] = mapped_column(default=False)
+    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
